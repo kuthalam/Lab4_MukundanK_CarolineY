@@ -1,3 +1,7 @@
+/* Name: Mukundan Kuthalam, Caroline Yao
+ * EID: mk33274, chy253
+ * EE 422C - Assignment 4
+ */
 package assignment4;
 
 import java.io.BufferedReader;
