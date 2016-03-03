@@ -11,9 +11,17 @@ public class Assign4Driver
 
         try 
         {
+        	//WordLadderSolver ls = new WordLadderSolver(); - Yay, dictionary is set up
             List<String> result = wordLadderSolver.computeLadder("money", "honey");
             boolean correct = wordLadderSolver.validateResult("money", "honey", result);
-        } 
+            if (correct == true) {
+            	System.out.println("Correct");
+            }
+            else {
+            	System.out.println("Incorrect");
+            }
+        }
+        
         catch (NoSuchLadderException e) 
         {
             e.printStackTrace();
