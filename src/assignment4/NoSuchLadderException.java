@@ -1,3 +1,8 @@
+/* Name: Mukundan Kuthalam, Caroline Yao
+ * EID: mk33274, chy253
+ * EE 422C - Assignment 4
+ */
+
 package assignment4;
 
 public class NoSuchLadderException extends Exception

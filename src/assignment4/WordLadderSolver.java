@@ -58,6 +58,10 @@ public class WordLadderSolver implements Assignment4Interface
     	List<String> candidates = new ArrayList<String>(); //All the possible words that could go in solutionList
     	String changeWord = "a"; //This is a variable that holds the word after changing one letter 
     	
+    	if (fromWord.equals(toWord)) { //This is when you have reached the end of the ladder
+    		return solutionList;
+    	}
+    	
     	if ((fromWord.toCharArray()).length != 5) {
     		//If the length of the word is not 5, we have a problem
     	}
