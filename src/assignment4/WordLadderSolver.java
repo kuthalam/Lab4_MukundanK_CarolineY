@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 import java.util.Queue;
 
@@ -34,11 +35,11 @@ public class WordLadderSolver implements Assignment4Interface
     @Override
     public List<String> computeLadder(String startWord, String endWord) throws NoSuchLadderException 
     {
-    	
+    	//TODO Where do we print the ladder?? An implementation is given below
     	boolean startIsValid = false;
     	boolean endIsValid = true;
     	
-    	for (Iterator<String> i = dictionary.dictionary.iterator(); i.hasNext();) {
+    	for (Iterator<String> i = dictionary.words.iterator(); i.hasNext();) {
     		String word = i.next(); //Save the word you find in the ArrayList so you do not skip it
     		if (word.equals(startWord)) {
     			startIsValid = true;
@@ -79,7 +80,11 @@ public class WordLadderSolver implements Assignment4Interface
     @Override
     public boolean validateResult(String startWord, String endWord, List<String> wordLadder) 
     {
-    	//TODO How to validate the result that was given if a word ladder was found
+    	//TODO How to validate that a word ladder should not exist
+    	
+    	boolean firstIterationFlag = true;
+    	String prevWord, nextWord;
+    	
     	if (isOneLetterOff(startWord, endWord) == false && wordLadder == null) {
     		return true; //If the words are the same and the wordLadder is empty
     	}
@@ -88,11 +93,28 @@ public class WordLadderSolver implements Assignment4Interface
     		return true; //If the words are one letter off and the wordLadder is empty
     	}
     	
-    	for(Iterator<String> i = wordLadder.iterator(); i.hasNext();) {
-    		
+    	if (MakeLadder(startWord, endWord) == null) {
+    		return false; //Temporary solution to TODO task
     	}
     	
-        throw new UnsupportedOperationException("Not implemented yet!");
+    	for(ListIterator<String> i = wordLadder.listIterator(); i.hasNext();) {
+    		if (firstIterationFlag == true) { //First check the first two words of the word ladder
+    			if (isOneLetterOff(i.next(),i.next()) == false) {
+    				return false; //If the first two words are not one letter off
+    			}
+    			firstIterationFlag = false; //The first iteration is over
+    			continue; //Move to next iteration
+    		}
+    		prevWord = i.previous(); //Recover the word that was skipped over due to the previous loop
+    		i.next(); //Now you skip over that word again
+    		nextWord = i.next(); //The word you want to compare prevWord to is nextWord
+    		if (isOneLetterOff(prevWord, nextWord) == false) {
+    			return false; //This means that two of the words are not one char away from each other
+    		}
+    	}
+    	
+    	return true; //None of the error cases were reached - the word ladder is valid
+        //throw new UnsupportedOperationException("Not implemented yet!");
     }
 
 	//add additional methods here
@@ -160,9 +182,9 @@ public class WordLadderSolver implements Assignment4Interface
     	//for each word, make a list of words that are only one char off
     	//need to check each letter and find words where that is the only char different
     	//store these words in a list for each dictionary word
-    	for(String word : dictionary.dictionary){ //Iterate over the ArrayList in the Dictionary object
+    	for(String word : dictionary.words){ //Iterate over the ArrayList in the Dictionary object
     		List<String> list = new ArrayList<String>();
-    		for(String w : dictionary.dictionary){
+    		for(String w : dictionary.words){
     			if(isOneLetterOff(w, word))
     				list.add(w);
     			//if w isn't off from word by one letter, check next w

@@ -12,10 +12,10 @@ import java.util.ArrayList;
 
 public class Dictionary {
 	
-	protected ArrayList<String> dictionary;
+	protected ArrayList<String> words;
 	
 	Dictionary () {
-		dictionary = processLinesInFile("A4-words.txt"); //This sets up the dictionary
+		words = processLinesInFile("A4-words.txt"); //This sets up the dictionary
 	}
 	
 	public ArrayList<String> processLinesInFile (String filename) 
