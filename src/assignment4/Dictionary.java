@@ -1,7 +1,9 @@
 /* Name: Mukundan Kuthalam, Caroline Yao
  * EID: mk33274, chy253
+ * Section: Thursday 3:30-5pm
  * EE 422C - Assignment 4
  */
+
 package assignment4;
 
 import java.io.BufferedReader;
@@ -9,10 +11,13 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Dictionary {
 	
 	protected ArrayList<String> words;
+	Scanner input = new Scanner(System.in); //Allocate space for the user input from the console
+	String file; //The input should be a string object
 	
 	Dictionary () {
 		words = processLinesInFile("A4-words.txt"); //This sets up the dictionary
@@ -23,7 +28,13 @@ public class Dictionary {
 		ArrayList<String> dictionary = new ArrayList<String>(); //Set up an array list to hold the dictionary words
 		try 
 		{
-			FileReader freader = new FileReader(filename);
+			System.out.println("Please enter a file to read the dictionary from: ");
+			file = input.nextLine();
+			if (file.equals("") == true) {
+				file = "A4-words.txt"; //Set this as a default file name
+				//If it is not a file that cannot be found, the FileNotFoundException will handle it
+			}
+			FileReader freader = new FileReader(file);
 			BufferedReader reader = new BufferedReader(freader); //Both lines copied from before, no clue how this works exactly
 			
 			for (String s = reader.readLine(); s != null; s = reader.readLine()) 

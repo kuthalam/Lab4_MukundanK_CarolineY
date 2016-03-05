@@ -1,3 +1,9 @@
+/* Name: Mukundan Kuthalam, Caroline Yao
+ * EID: mk33274, chy253
+ * Section: Thursday 3:30-5pm
+ * EE 422C - Assignment 4
+ */
+
 package assignment4;
 
 import java.util.List;
@@ -11,7 +17,6 @@ public class Assign4Driver
 
         try 
         {
-        	//WordLadderSolver ls = new WordLadderSolver(); - Yay, dictionary is set up
             List<String> result = wordLadderSolver.computeLadder("money", "honey");
             boolean correct = wordLadderSolver.validateResult("money", "honey", result);
             if (correct == true) {
