@@ -12,6 +12,7 @@ import java.io.FileReader;
 import java.io.IOException; */
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -34,18 +35,68 @@ public class WordLadderSolver implements Assignment4Interface
     public List<String> computeLadder(String startWord, String endWord) throws NoSuchLadderException 
     {
     	
-        // implement this method
-        throw new UnsupportedOperationException("Not implemented yet!");
+    	boolean startIsValid = false;
+    	boolean endIsValid = true;
+    	
+    	for (Iterator<String> i = dictionary.dictionary.iterator(); i.hasNext();) {
+    		String word = i.next(); //Save the word you find in the ArrayList so you do not skip it
+    		if (word.equals(startWord)) {
+    			startIsValid = true;
+    		}
+    		if (word.equals(endWord)) { //Remember the fromWord could be the same as the toWord
+    			endIsValid = true;
+    		}
+    	}
+    	
+    	if ((startIsValid == false) || (endIsValid == false)) { //If neither word can be found in the dictionary, throw an exception
+    		throw new NoSuchLadderException("Entered words are invalid");
+    	}
+    	
+    	//What if starting and ending word are the same?
+    	if (isOneLetterOff(startWord, endWord) == false) { //The function returns false if the words are the same
+    		return solutionList; //If the words are equal, the solution list is empty
+    	}
+    	
+    	//What if starting and ending word are one letter off
+    	if (isOneLetterOff(startWord, endWord) == true) { //The function returns false if the words are the same
+    		return solutionList; //The same applies to words that are only one letter off
+    	}
+    	
+    	return MakeLadder(startWord, endWord);
+    	
+    	/*if (solutionList != null) { //Ensure that a word ladder has been found
+    		System.out.println(" \n For the input words " + startWord + " and " + endWord + " the following word ladder was found:");
+    		System.out.print(startWord + " "); //Print the first word of the ladder
+    		for (Iterator<String> ladderWord = solutionList.iterator(); ladderWord.hasNext();) {
+    			System.out.println(ladderWord.next() + " ");
+    		}
+    		System.out.println(endWord + " "); //The last word in the ladder should be the end word
+    	} */
+    	
+        //throw new UnsupportedOperationException("Not implemented yet!");
     }
 
     @Override
     public boolean validateResult(String startWord, String endWord, List<String> wordLadder) 
     {
+    	//TODO How to validate the result that was given if a word ladder was found
+    	if (isOneLetterOff(startWord, endWord) == false && wordLadder == null) {
+    		return true; //If the words are the same and the wordLadder is empty
+    	}
+    	
+    	if (isOneLetterOff(startWord, endWord) == true && wordLadder == null) {
+    		return true; //If the words are one letter off and the wordLadder is empty
+    	}
+    	
+    	for(Iterator<String> i = wordLadder.iterator(); i.hasNext();) {
+    		
+    	}
+    	
         throw new UnsupportedOperationException("Not implemented yet!");
     }
 
 	//add additional methods here
-    public List<String> MakeLadder(String fromWord, String toWord) {
+    public List<String> MakeLadder(String fromWord, String toWord){
     	/* Here is the process for this:
     	 * Step 1: Create an array of all words that are one away from each char of the starting word
     	 * Do this by switching every char of the forWord from a-z and seeing if each changes results in a legit word
@@ -59,9 +110,6 @@ public class WordLadderSolver implements Assignment4Interface
     	 * Step 8: Keep checking and going back as needed until you hit gold or you run out of words to check
     	 * Step 9: You hit gold, return the list. If not, throw the NoSuchLadderException
     	 */
-    	// TODO what happens if the starting and ending word are the same?
-    	// TODO what happens if the starting and ending word are only one letter off?
-    	// TODO need to check that both input words are valid words found in dictionary (error message)
     	
     	Map<String, List<String>> wordMap = new HashMap<String, List<String>>(); //lists of all words off by one char from dictionary word (key)
     	fillMap(wordMap);
@@ -112,9 +160,9 @@ public class WordLadderSolver implements Assignment4Interface
     	//for each word, make a list of words that are only one char off
     	//need to check each letter and find words where that is the only char different
     	//store these words in a list for each dictionary word
-    	for(String word : dictionary.words){
+    	for(String word : dictionary.dictionary){ //Iterate over the ArrayList in the Dictionary object
     		List<String> list = new ArrayList<String>();
-    		for(String w : dictionary.words){
+    		for(String w : dictionary.dictionary){
     			if(isOneLetterOff(w, word))
     				list.add(w);
     			//if w isn't off from word by one letter, check next w

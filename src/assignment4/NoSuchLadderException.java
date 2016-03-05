@@ -1,6 +1,5 @@
 /* Name: Mukundan Kuthalam, Caroline Yao
  * EID: mk33274, chy253
- * Section: Thursday 3:30-5pm
  * EE 422C - Assignment 4
  */
 
@@ -9,7 +8,7 @@ package assignment4;
 public class NoSuchLadderException extends Exception
 {
     private static final long serialVersionUID = 1L;
-
+    
     public NoSuchLadderException(String message)
     {
         super(message);

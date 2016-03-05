@@ -1,15 +1,9 @@
-/* Name: Mukundan Kuthalam, Caroline Yao
- * EID: mk33274, chy253
- * Section: Thursday 3:30-5pm
- * EE 422C - Assignment 4
- */
 package assignment4;
 
 import java.util.List;
 
 public class Assign4Driver
 {
-	// TODO need to make sure reading from dictionary file and word pair file
     public static void main(String[] args)
     {
         // Create a word ladder solver object
