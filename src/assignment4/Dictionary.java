@@ -1,5 +1,6 @@
 /* Name: Mukundan Kuthalam, Caroline Yao
  * EID: mk33274, chy253
+ * Section: Thursday 3:30-5pm
  * EE 422C - Assignment 4
  */
 package assignment4;
@@ -12,10 +13,10 @@ import java.util.ArrayList;
 
 public class Dictionary {
 	
-	protected ArrayList<String> dictionary;
+	protected ArrayList<String> words;
 	
 	Dictionary () {
-		dictionary = processLinesInFile("A4-words.txt"); //This sets up the dictionary
+		words = processLinesInFile("A4-words.txt"); //This sets up the dictionary
 	}
 	
 	public ArrayList<String> processLinesInFile (String filename) 
