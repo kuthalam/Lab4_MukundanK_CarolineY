@@ -23,7 +23,7 @@ import java.util.Queue;
 public class WordLadderSolver implements Assignment4Interface
 {
 	protected Dictionary dictionary; //Create a Dictionary object to hold the dictionary words
-	protected List<String> solutionList; //This is a list of all the words that can be moved to (for the Ladder)
+	protected List<String> solutionList = new ArrayList<String>(); //This is a list of all the words that can be moved to (for the Ladder)
 
     WordLadderSolver() {
     	dictionary = new Dictionary(); //Set up the words from the file
@@ -54,7 +54,7 @@ public class WordLadderSolver implements Assignment4Interface
     	}
     	
     	//What if starting and ending word are the same?
-    	if (isOneLetterOff(startWord, endWord) == false) { //The function returns false if the words are the same
+    	if (startWord.equals(endWord) == true) { //The function returns true if the words are the same
     		return solutionList; //If the words are equal, the solution list is empty
     	}
     	
@@ -64,15 +64,6 @@ public class WordLadderSolver implements Assignment4Interface
     	}
     	
     	return MakeLadder(startWord, endWord);
-    	
-    	/*if (solutionList != null) { //Ensure that a word ladder has been found
-    		System.out.println(" \n For the input words " + startWord + " and " + endWord + " the following word ladder was found:");
-    		System.out.print(startWord + " "); //Print the first word of the ladder
-    		for (Iterator<String> ladderWord = solutionList.iterator(); ladderWord.hasNext();) {
-    			System.out.println(ladderWord.next() + " ");
-    		}
-    		System.out.println(endWord + " "); //The last word in the ladder should be the end word
-    	} */
     	
         //throw new UnsupportedOperationException("Not implemented yet!");
     }
@@ -85,16 +76,18 @@ public class WordLadderSolver implements Assignment4Interface
     	boolean firstIterationFlag = true;
     	String prevWord, nextWord;
     	
-    	if (isOneLetterOff(startWord, endWord) == false && wordLadder == null) {
+    	if (isOneLetterOff(startWord, endWord) == false && wordLadder.isEmpty() == true) {
+    		printLadder(startWord, endWord, wordLadder); //Print the wordLadder
     		return true; //If the words are the same and the wordLadder is empty
     	}
     	
-    	if (isOneLetterOff(startWord, endWord) == true && wordLadder == null) {
+    	if (isOneLetterOff(startWord, endWord) == true && wordLadder.isEmpty() == true) {
+    		printLadder(startWord, endWord, wordLadder); //Print the wordLadder
     		return true; //If the words are one letter off and the wordLadder is empty
     	}
     	
     	if (MakeLadder(startWord, endWord) == null) {
-    		return false; //Temporary solution to TODO task
+    		return true; //Temporary solution to TODO task
     	}
     	
     	for(ListIterator<String> i = wordLadder.listIterator(); i.hasNext();) {
@@ -112,9 +105,10 @@ public class WordLadderSolver implements Assignment4Interface
     			return false; //This means that two of the words are not one char away from each other
     		}
     	}
-    	
+    	printLadder(startWord, endWord, wordLadder); //Print the word ladder
     	return true; //None of the error cases were reached - the word ladder is valid
-        //throw new UnsupportedOperationException("Not implemented yet!");
+        
+    	//throw new UnsupportedOperationException("Not implemented yet!");
     }
 
 	//add additional methods here
@@ -190,6 +184,29 @@ public class WordLadderSolver implements Assignment4Interface
     			//if w isn't off from word by one letter, check next w
     		}
     		map.put(word, list);
+    	}
+    }
+    
+    public void printLadder(String startWord, String endWord, List<String> wordLadder) {
+    	if (solutionList != null) { //Ensure that a word ladder has been found
+    		System.out.println("\nFor the input words \"" + startWord + "\" and \"" + endWord + "\" the following word ladder was found:");
+    		System.out.print(startWord + " "); //Print the first word of the ladder
+    		for (Iterator<String> ladderWord = solutionList.iterator(); ladderWord.hasNext();) {
+    			System.out.println(ladderWord.next() + " ");
+    		}
+    		System.out.println(endWord + " "); //The last word in the ladder should be the end word
+    		System.out.println("**********"); //Use 10 asterisks to denote the end of a word ladder
+    	}
+    	else if ((solutionList == null) && (isOneLetterOff(startWord,endWord) == true)) {
+    		//What if the ladder is empty because the input words are one letter off?
+    		System.out.println("\nFor the input words \"" + startWord + "\" and \"" + endWord + "\" the following word ladder was found:");
+    		System.out.print(startWord + " "); //Print the first word of the ladder
+    		System.out.println(endWord + " "); //The last word in the ladder should be the end word
+    		System.out.println("**********"); //Use 10 asterisks to denote the end of a word ladder
+    	}
+    	else { //What if a valid word ladder was not found
+    		System.out.println("\nFor the input words " + startWord + " and " + endWord + " a valid word ladder could not be found");
+    		System.out.println("**********"); //Use 10 asterisks to denote the end of a word ladder
     	}
     }
 }
