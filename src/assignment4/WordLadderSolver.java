@@ -144,8 +144,11 @@ public class WordLadderSolver implements Assignment4Interface
     }
     
     public void printLadder(String startWord, String endWord, List<String> wordLadder) {
-    		System.out.println(Arrays.toString(wordLadder.toArray()));
-    		System.out.println("**********");
+    	for(String word : wordLadder){
+    		System.out.print(word + " ");
+    	}
+    		//System.out.println(Arrays.toString(wordLadder.toArray()));
+    	System.out.println("\n**********");
     }
     
     public List<String> ladderToList (String startWord, String endWord, Map<String, String> map){
