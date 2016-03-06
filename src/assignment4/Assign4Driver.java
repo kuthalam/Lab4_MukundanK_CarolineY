@@ -18,10 +18,34 @@ public class Assign4Driver
     public static void main(String[] args)
     {
         // Create a word ladder solver object
-        Assignment4Interface wordLadderSolver = new WordLadderSolver();
+    	Assignment4Interface wordLadderSolver = new WordLadderSolver();
         List<String> result;
-   
-        try 
+        String filename = args[0];
+		try {
+			FileReader freader = new FileReader(filename);
+			BufferedReader reader = new BufferedReader(freader);
+
+			for (String s = reader.readLine(); s != null; s = reader.readLine()) {
+				s.trim();
+				String[] input = s.split("[\\s]+");
+				result = wordLadderSolver.computeLadder(input[0], input[1]);
+	            wordLadderSolver.validateResult(input[0], input[1], result);
+			}
+			reader.close();
+		} catch (NoSuchLadderException e) {
+			e.getMessage();
+            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+			System.err.println("Error: File not found. Exiting...");
+			e.printStackTrace();
+			System.exit(-1);
+		} catch (IOException e) {
+			System.err.println("Error: IO exception. Exiting...");
+			e.printStackTrace();
+			System.exit(-1);
+		}
+    
+        /*try 
         {
             result = wordLadderSolver.computeLadder("money", "honey");
             wordLadderSolver.validateResult("money", "honey", result);
@@ -64,5 +88,6 @@ public class Assign4Driver
         {
             e.printStackTrace();
         }
+    }*/
     }
 }

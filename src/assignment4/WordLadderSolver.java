@@ -23,7 +23,7 @@ import java.util.Queue;
 public class WordLadderSolver implements Assignment4Interface
 {
 	protected Dictionary dictionary; //Create a Dictionary object to hold the dictionary words
-	protected List<String> solutionList = new ArrayList<String>(); //This is a list of all the words that can be moved to (for the Ladder)
+	//protected List<String> solutionList = new ArrayList<String>(); //This is a list of all the words that can be moved to (for the Ladder)
 
     WordLadderSolver() {
     	dictionary = new Dictionary(); //Set up the words from the file
@@ -35,6 +35,7 @@ public class WordLadderSolver implements Assignment4Interface
     @Override
     public List<String> computeLadder(String startWord, String endWord) throws NoSuchLadderException 
     {
+    	
     	//TODO Where do we print the ladder?? An implementation is given below
     	/*boolean startIsValid = false;
     	boolean endIsValid = true;
@@ -57,7 +58,7 @@ public class WordLadderSolver implements Assignment4Interface
     	if(!dictionary.words.contains(startWord) || !dictionary.words.contains(endWord))
     		throw new NoSuchLadderException("At least one of the entered words is invalid.");
     	
-    	//What if starting and ending word are the same?
+    	/*//What if starting and ending word are the same?
     	if (startWord.equals(endWord) == true) { //The function returns true if the words are the same
     		return solutionList; //If the words are equal, the solution list is empty
     	}
@@ -67,7 +68,7 @@ public class WordLadderSolver implements Assignment4Interface
     		solutionList.add(startWord);
     		solutionList.add(endWord);
     		return solutionList; //The same applies to words that are only one letter off
-    	}
+    	}*/
     	
     	return MakeLadder(startWord, endWord);
     	
@@ -127,6 +128,7 @@ public class WordLadderSolver implements Assignment4Interface
 
 	//add additional methods here
     public List<String> MakeLadder(String fromWord, String toWord) throws NoSuchLadderException{
+    	List<String> solutionList = new ArrayList<String>();
     	if(isOneLetterOff(fromWord, toWord) || fromWord.equals(toWord)){ //if input is same or one letter off
     		solutionList.add(fromWord);
     		solutionList.add(toWord);
@@ -212,10 +214,10 @@ public class WordLadderSolver implements Assignment4Interface
     		//What if the ladder is empty because the input words are one letter off?
     		System.out.println("\nFor the input words \"" + startWord + "\" and \"" + endWord + "\" the following word ladder was found:");
     		//TODO fix this since startWord and endWord have been added to the beginning and end of returned ladder
-    		for (Iterator<String> ladderWord = solutionList.iterator(); ladderWord.hasNext();) {
+    		for (Iterator<String> ladderWord = wordLadder.iterator(); ladderWord.hasNext();) {
     			System.out.print(ladderWord.next() + " ");
     		}
-    		System.out.println("**********"); //Use 10 asterisks to denote the end of a word ladder
+    		System.out.println("\n**********"); //Use 10 asterisks to denote the end of a word ladder
     	
     	/*else { //What if a valid word ladder was not found
     		System.out.println("\nFor the input words " + startWord + " and " + endWord + " a valid word ladder could not be found");
