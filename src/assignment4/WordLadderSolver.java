@@ -119,14 +119,25 @@ public class WordLadderSolver implements Assignment4Interface
     		}
     	}*/
     	//check if first and last words are the start and end words
-    	if(!wordLadder.get(0).equals(startWord) || !wordLadder.get(wordLadder.size() - 1).equals(endWord))
-    		return false;
-    	for(int i = 0; i < wordLadder.size() - 1; i++){ //length - 1 iterations
-    		if(!isOneLetterOff(wordLadder.get(i), wordLadder.get(i+1)))
+    	if(startWord.equals(endWord)){
+    		if(wordLadder.size() != 2) //should contain start and end word
+    			return false;
+    		if(!wordLadder.get(0).equals(wordLadder.get(1))) //the 2 entries should be the same
+    			return false;
+    		if(!wordLadder.get(0).equals(startWord)) //first and last entry must equal the start word
     			return false;
     	}
-    	
-    	printLadder(startWord, endWord, wordLadder); //Print the word ladder
+    	else{
+    		if(!wordLadder.get(0).equals(startWord)) //first entry must be start word
+    			return false;
+    		if(!wordLadder.get(wordLadder.size() - 1).equals(endWord)) //last entry must be end word
+    			return false;
+    		for(int i = 0; i < wordLadder.size() - 1; i++){ //length - 1 iterations
+    			if(!isOneLetterOff(wordLadder.get(i), wordLadder.get(i+1)))
+    				return false;
+    		}
+    	}
+    	printLadder(startWord, endWord, wordLadder); //Print the valid word ladder
     	return true; //None of the error cases were reached - the word ladder is valid
         
     	//throw new UnsupportedOperationException("Not implemented yet!");
