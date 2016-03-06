@@ -14,6 +14,48 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Dictionary {
+	//TODO: Not sure why you changed the dictionary input to the console. I commented it out
+	//and had it read from command line arguments again because typing it in the console every
+	//time I run it made it time consuming to debug
+	protected ArrayList<String> words;
+	
+	Dictionary () {
+		words = processLinesInFile("A4-words.txt"); //This sets up the dictionary
+	}
+	
+	public ArrayList<String> processLinesInFile (String filename) 
+	{
+		ArrayList<String> dictionary = new ArrayList<String>(); //Set up an array list to hold the dictionary words
+		try 
+		{
+			FileReader freader = new FileReader(filename);
+			BufferedReader reader = new BufferedReader(freader); //Both lines copied from before, no clue how this works exactly
+			
+			for (String s = reader.readLine(); s != null; s = reader.readLine()) 
+			{
+				String line = s; //Get the first line of the file
+				if (line.charAt(0) == '*') {
+					continue; //Skip this iteration of the loop since you don't care about this line
+				}
+				dictionary.add(line.substring(0,5)); //Since you know the first 5 chars is the word, load it into the dictionary
+			} //The dictionary is complete
+			reader.close();
+		} 
+		catch (FileNotFoundException e) 
+		{
+			System.err.println ("Error: File not found. Exiting...");
+			e.printStackTrace();
+			System.exit(-1);
+		} catch (IOException e) 
+		{
+			System.err.println ("Error: IO exception. Exiting...");
+			e.printStackTrace();
+			System.exit(-1);
+		}
+		return dictionary;
+	}
+}
+/*public class Dictionary {
 	
 	protected ArrayList<String> words;
 	Scanner input = new Scanner(System.in); //Allocate space for the user input from the console
@@ -60,3 +102,4 @@ public class Dictionary {
 		return dictionary;
 	}
 }
+*/

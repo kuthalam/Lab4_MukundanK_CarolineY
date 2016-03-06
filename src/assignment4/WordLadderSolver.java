@@ -20,6 +20,11 @@ import java.util.Map;
 import java.util.Queue;
 
 // do not change class name or interface it implements
+//TODO: I'm working out a lot of bugs so I've commented out a lot of stuff.
+//Sorry that it's so messy. I'll fix everything Sunday. Try not to change anything
+//because it might make me lose what I was trying to do since I'm still in the middle
+//of changing everything to fix the bugs.
+//TODO: Can you start working on the testing report that's mentioned in the pdf?
 public class WordLadderSolver implements Assignment4Interface
 {
 	protected Dictionary dictionary; //Create a Dictionary object to hold the dictionary words
@@ -80,7 +85,7 @@ public class WordLadderSolver implements Assignment4Interface
     {
     	//TODO How to validate that a word ladder should not exist
     	
-    	boolean firstIterationFlag = true;
+   /* 	boolean firstIterationFlag = true;
     	String prevWord, nextWord;
     	
     	if (isOneLetterOff(startWord, endWord) == false && wordLadder.isEmpty() == true) {
@@ -91,7 +96,7 @@ public class WordLadderSolver implements Assignment4Interface
     	if (isOneLetterOff(startWord, endWord) == true && wordLadder.isEmpty() == true) {
     		printLadder(startWord, endWord, wordLadder); //Print the wordLadder
     		return true; //If the words are one letter off and the wordLadder is empty
-    	}
+    	}*/
     	
     	/*if (MakeLadder(startWord, endWord) == null) {
     		return true; //Temporary solution to TODO task
@@ -128,6 +133,7 @@ public class WordLadderSolver implements Assignment4Interface
 
 	//add additional methods here
     public List<String> MakeLadder(String fromWord, String toWord) throws NoSuchLadderException{
+    	//TODO I've figured out what's wrong with the BFS, I'll fix it later
     	List<String> solutionList = new ArrayList<String>();
     	if(isOneLetterOff(fromWord, toWord) || fromWord.equals(toWord)){ //if input is same or one letter off
     		solutionList.add(fromWord);

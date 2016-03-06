@@ -18,6 +18,9 @@ public class Assign4Driver
     public static void main(String[] args)
     {
         // Create a word ladder solver object
+    	// TODO: It said in the pdf that we need to read input pairs from a file
+    	// so I changed it. I left your implementation commented out in case the
+    	// TA's change their mind on Piazza since some TA's gave conflicting answers
     	Assignment4Interface wordLadderSolver = new WordLadderSolver();
         List<String> result;
         String filename = args[0];
