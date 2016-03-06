@@ -11,11 +11,12 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException; */
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Iterator;
+//import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.ListIterator;
+//import java.util.ListIterator;
 import java.util.Map;
 import java.util.Queue;
 
@@ -134,26 +135,32 @@ public class WordLadderSolver implements Assignment4Interface
 	//add additional methods here
     public List<String> MakeLadder(String fromWord, String toWord) throws NoSuchLadderException{
     	//TODO I've figured out what's wrong with the BFS, I'll fix it later
-    	List<String> solutionList = new ArrayList<String>();
+    	//List<String> solutionList = new ArrayList<String>();
+    	Map<String, String> parentMap = new HashMap<String, String>();
     	if(isOneLetterOff(fromWord, toWord) || fromWord.equals(toWord)){ //if input is same or one letter off
-    		solutionList.add(fromWord);
+    		/*solutionList.add(fromWord);
     		solutionList.add(toWord);
-    		return solutionList;
+    		return solutionList;*/
+    		parentMap.put(toWord, fromWord);
+    		List<String> ladder = ladderToList(fromWord, toWord, parentMap);
+    		return ladder;
     	}
-    	solutionList.add(fromWord);
+    	//solutionList.add(fromWord);
     	Map<String, List<String>> wordMap = new HashMap<String, List<String>>(); //lists of all words off by one char from dictionary word (key)
     	fillMap(wordMap);
-    	
     	Queue<String> q = new LinkedList<String>();
     	List<String> visited = new ArrayList<String>();	//list of words already visited
     	q.add(fromWord);
+    	visited.add(fromWord);
     	while(!q.isEmpty()){
     		String word = q.poll();
-    		visited.add(word);
     		if(isOneLetterOff(word,toWord)){
-    			solutionList.add(word);	//last word in ladder
+    			parentMap.put(toWord, word); //parent of end word is the word that is one letter off
+    			List<String> ladder = ladderToList(fromWord, toWord, parentMap);
+        		return ladder;
+    			/*solutionList.add(word);	//last word in ladder
     			solutionList.add(toWord); //add ending word
-    			return solutionList;
+    			return solutionList;*/
     		}
     		List<String> nextLayer = wordMap.get(word);	//all words one letter off from current word
     		for(String node : nextLayer){
@@ -161,10 +168,11 @@ public class WordLadderSolver implements Assignment4Interface
     				continue; //node has already been visited
     			q.add(node); //add newly discovered nodes to queue
     			visited.add(node); //mark as visited
+    			parentMap.put(node, word);
     		}
     	}
     	//return null; //no ladder found
-    	solutionList.add(toWord); //need this?
+    	//solutionList.add(toWord); //need this?
     	throw new NoSuchLadderException("No ladder could be found between " + fromWord + " and " + toWord + ".");
     }
     
@@ -218,16 +226,45 @@ public class WordLadderSolver implements Assignment4Interface
     	}*/
    
     		//What if the ladder is empty because the input words are one letter off?
-    		System.out.println("\nFor the input words \"" + startWord + "\" and \"" + endWord + "\" the following word ladder was found:");
+    		/*System.out.println("\nFor the input words \"" + startWord + "\" and \"" + endWord + "\" the following word ladder was found:");
     		//TODO fix this since startWord and endWord have been added to the beginning and end of returned ladder
     		for (Iterator<String> ladderWord = wordLadder.iterator(); ladderWord.hasNext();) {
     			System.out.print(ladderWord.next() + " ");
     		}
     		System.out.println("\n**********"); //Use 10 asterisks to denote the end of a word ladder
-    	
+    	*/
     	/*else { //What if a valid word ladder was not found
     		System.out.println("\nFor the input words " + startWord + " and " + endWord + " a valid word ladder could not be found");
     		System.out.println("**********"); //Use 10 asterisks to denote the end of a word ladder
     	}*/
+    		/*String ladder = endWord;
+    		String word = endWord;
+    		while(!word.equals(startWord)){
+    			String parent = wordLadder.get(word);
+    			ladder = parent + " " + ladder;
+    			word = parent;
+    		}*/
+    		System.out.println(Arrays.toString(wordLadder.toArray()));
+    		System.out.println("**********");
+    }
+    
+    public List<String> ladderToList (String startWord, String endWord, Map<String, String> map){
+    	LinkedList<String> ladder = new LinkedList<String>();
+    	if(startWord.equals(endWord)){
+    		ladder.add(startWord);
+    		ladder.add(endWord);
+    		return ladder;
+    	}
+    	ladder.add(endWord);
+    	String word = endWord;
+    	while(!word.equals(startWord)){
+    		String parent = map.get(word);
+    		ladder.addFirst(parent);
+    		word = parent;
+    	}
+    	return ladder;
+    	
     }
 }
+
+
