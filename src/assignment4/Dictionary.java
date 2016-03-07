@@ -17,9 +17,10 @@ public class Dictionary {
 	protected ArrayList<String> words;
 	
 	Dictionary (String file) {
-		words = processLinesInFile(file); //This sets up the dictionary
+		words = processLinesInFile(file); //read from dictionary file
 	}
 	
+	//process the dictionary file and return a valid dictionary of 5 letter words
 	public ArrayList<String> processLinesInFile (String filename) 
 	{
 		ArrayList<String> dictionary = new ArrayList<String>(); //Set up an array list to hold the dictionary words

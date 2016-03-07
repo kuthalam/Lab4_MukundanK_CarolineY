@@ -32,6 +32,7 @@ public class WordLadderSolver implements Assignment4Interface
 
     // do not change signature of the method implemented from the interface
     @Override
+    //returns a valid ladder or throws an exception
     public List<String> computeLadder(String startWord, String endWord) throws NoSuchLadderException 
     {
     	//throw exception if at least one of the input words is not in the dictionary
@@ -45,11 +46,10 @@ public class WordLadderSolver implements Assignment4Interface
     		throw new NoSuchLadderException("There is no word ladder between " + startWord + " and " + endWord + ".");
     	}
     	return ladder;
-    	
-        //throw new UnsupportedOperationException("Not implemented yet!");
     }
 
     @Override
+    //returns true if ladder is valid and prints it, otherwise returns false
     public boolean validateResult(String startWord, String endWord, List<String> wordLadder)
     {
     	//check if first and last words are the start and end words
@@ -73,18 +73,15 @@ public class WordLadderSolver implements Assignment4Interface
     	}
     	printLadder(startWord, endWord, wordLadder); //Print the valid word ladder
     	return true; //None of the error cases were reached - the word ladder is valid
-        
-    	//TODO: throw new UnsupportedOperationException("Not implemented yet!");
-    	//what is this for?
     }
 
-	//add additional methods here
+	//implements BFS and returns a ladder between the start and end word, or null if none
     public List<String> MakeLadder(String fromWord, String toWord) {
     	//TODO I've figured out what's wrong with the BFS, I'll fix it later
     	Map<String, String> parentMap = new HashMap<String, String>();
     	if(isOneLetterOff(fromWord, toWord) || fromWord.equals(toWord)){ //if input is same or one letter off
     		parentMap.put(toWord, fromWord);
-    		List<String> ladder = ladderToList(fromWord, toWord, parentMap);
+    		List<String> ladder = mapToList(fromWord, toWord, parentMap);
     		return ladder;
     	}
     	Map<String, List<String>> wordMap = new HashMap<String, List<String>>(); //lists of all words off by one char from dictionary word (key)
@@ -97,7 +94,7 @@ public class WordLadderSolver implements Assignment4Interface
     		String word = q.poll();
     		if(isOneLetterOff(word,toWord)){
     			parentMap.put(toWord, word); //parent of end word is the word that is one letter off
-    			List<String> ladder = ladderToList(fromWord, toWord, parentMap);
+    			List<String> ladder = mapToList(fromWord, toWord, parentMap);
         		return ladder;
     		}
     		List<String> nextLayer = wordMap.get(word);	//all words one letter off from current word
@@ -109,11 +106,11 @@ public class WordLadderSolver implements Assignment4Interface
     			parentMap.put(node, word);
     		}
     	}
-    	return null;
-    	//no ladder could be found
-    	//throw new NoSuchLadderException("No ladder could be found between " + fromWord + " and " + toWord + ".");
+    	return null; //no ladder could be found
     }
     
+    //returns true if the words differ only by one letter, false otherwise
+    //will return false if the words are the same
     public boolean isOneLetterOff(String word1, String word2){
     	if(word1.equals(word2)){ //all letters same
     		return false;
@@ -136,10 +133,10 @@ public class WordLadderSolver implements Assignment4Interface
     	return false;
     }
     
+    //fills a map with a list for every dictionary word
+    //each list contains the words that differ by only one letter to the specific dictionary word
+    //lists do not contain the dictionary word itself since it does not differ by a letter
     public void fillMap(Map<String, List<String>> map){
-    	//for each word, make a list of words that are only one char off
-    	//need to check each letter and find words where that is the only char different
-    	//store these words in a list for each dictionary word
     	for(String word : dictionary.words){ //Iterate over the ArrayList in the Dictionary object
     		List<String> list = new ArrayList<String>();
     		for(String w : dictionary.words){ //iterate through all words in dictionary to find all one letter off from word
@@ -151,6 +148,7 @@ public class WordLadderSolver implements Assignment4Interface
     	}
     }
     
+    //prints the valid ladder to the console, returns nothing
     public void printLadder(String startWord, String endWord, List<String> wordLadder) {
     	System.out.println("For the input words '" + startWord + "' and '" + endWord + "' the following word ladder was found");
     	for(String word : wordLadder){
@@ -159,7 +157,8 @@ public class WordLadderSolver implements Assignment4Interface
     	System.out.println("\n**********");
     }
     
-    public List<String> ladderToList (String startWord, String endWord, Map<String, String> map){
+    //creates and returns a ladder list from the given map
+    public List<String> mapToList (String startWord, String endWord, Map<String, String> map){
     	LinkedList<String> ladder = new LinkedList<String>();
     	if(startWord.equals(endWord)){
     		ladder.add(startWord);
@@ -176,8 +175,6 @@ public class WordLadderSolver implements Assignment4Interface
     	return ladder;
     	
     }
-    
-    
 }
 
 
