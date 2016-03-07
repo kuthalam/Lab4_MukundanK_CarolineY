@@ -9,7 +9,7 @@ public class WordLadderTester {
 	
 	@Test
 	public void test() {
-		WordLadderSolver wordLadderSolver = new WordLadderSolver();
+		WordLadderSolver wordLadderSolver = new WordLadderSolver("A4-words.txt");
 		List<String> result = null;
 		try {
 			result = wordLadderSolver.computeLadder("aback", "abate");
