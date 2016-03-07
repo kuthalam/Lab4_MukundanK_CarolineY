@@ -77,7 +77,6 @@ public class WordLadderSolver implements Assignment4Interface
 
 	//implements BFS and returns a ladder between the start and end word, or null if none
     public List<String> MakeLadder(String fromWord, String toWord) {
-    	//TODO I've figured out what's wrong with the BFS, I'll fix it later
     	Map<String, String> parentMap = new HashMap<String, String>();
     	if(isOneLetterOff(fromWord, toWord) || fromWord.equals(toWord)){ //if input is same or one letter off
     		parentMap.put(toWord, fromWord);
