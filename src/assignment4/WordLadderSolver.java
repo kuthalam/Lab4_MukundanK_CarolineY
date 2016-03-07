@@ -35,12 +35,15 @@ public class WordLadderSolver implements Assignment4Interface
     public List<String> computeLadder(String startWord, String endWord) throws NoSuchLadderException 
     {
     	//throw exception if at least one of the input words is not in the dictionary
-    	if(!dictionary.words.contains(startWord) || !dictionary.words.contains(endWord))
-    		throw new NoSuchLadderException("At least one of the entered words (" + startWord + ", " + endWord + ") " + "is invalid.");
-    	
+    	if(!dictionary.words.contains(startWord) || !dictionary.words.contains(endWord)){
+        	System.out.println("For the input words '" + startWord + "' and '" + endWord + "' the following word ladder was found");
+    		throw new NoSuchLadderException("At least one of the words " + startWord + " and " + endWord + " are not legitimate 5-letter words from the dictionary.");
+    	}
     	List<String> ladder = MakeLadder(startWord, endWord);
-    	if(ladder == null)
+    	if(ladder == null){
+        	System.out.println("For the input words '" + startWord + "' and '" + endWord + "' the following word ladder was found");
     		throw new NoSuchLadderException("There is no word ladder between " + startWord + " and " + endWord + ".");
+    	}
     	return ladder;
     	
         //throw new UnsupportedOperationException("Not implemented yet!");
@@ -149,6 +152,7 @@ public class WordLadderSolver implements Assignment4Interface
     }
     
     public void printLadder(String startWord, String endWord, List<String> wordLadder) {
+    	System.out.println("For the input words '" + startWord + "' and '" + endWord + "' the following word ladder was found");
     	for(String word : wordLadder){
     		System.out.print(word + " ");
     	}
