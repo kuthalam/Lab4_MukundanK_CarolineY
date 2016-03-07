@@ -34,10 +34,14 @@ public class WordLadderSolver implements Assignment4Interface
     @Override
     public List<String> computeLadder(String startWord, String endWord) throws NoSuchLadderException 
     {
+    	//throw exception if at least one of the input words is not in the dictionary
     	if(!dictionary.words.contains(startWord) || !dictionary.words.contains(endWord))
-    		throw new NoSuchLadderException("At least one of the entered words is invalid.");
+    		throw new NoSuchLadderException("At least one of the entered words (" + startWord + ", " + endWord + ") " + "is invalid.");
     	
-    	return MakeLadder(startWord, endWord);
+    	List<String> ladder = MakeLadder(startWord, endWord);
+    	if(ladder == null)
+    		throw new NoSuchLadderException("There is no word ladder between " + startWord + " and " + endWord + ".");
+    	return ladder;
     	
         //throw new UnsupportedOperationException("Not implemented yet!");
     }
@@ -72,7 +76,7 @@ public class WordLadderSolver implements Assignment4Interface
     }
 
 	//add additional methods here
-    public List<String> MakeLadder(String fromWord, String toWord) throws NoSuchLadderException{
+    public List<String> MakeLadder(String fromWord, String toWord) {
     	//TODO I've figured out what's wrong with the BFS, I'll fix it later
     	Map<String, String> parentMap = new HashMap<String, String>();
     	if(isOneLetterOff(fromWord, toWord) || fromWord.equals(toWord)){ //if input is same or one letter off
@@ -102,8 +106,9 @@ public class WordLadderSolver implements Assignment4Interface
     			parentMap.put(node, word);
     		}
     	}
+    	return null;
     	//no ladder could be found
-    	throw new NoSuchLadderException("No ladder could be found between " + fromWord + " and " + toWord + ".");
+    	//throw new NoSuchLadderException("No ladder could be found between " + fromWord + " and " + toWord + ".");
     }
     
     public boolean isOneLetterOff(String word1, String word2){
@@ -147,7 +152,6 @@ public class WordLadderSolver implements Assignment4Interface
     	for(String word : wordLadder){
     		System.out.print(word + " ");
     	}
-    		//System.out.println(Arrays.toString(wordLadder.toArray()));
     	System.out.println("\n**********");
     }
     
@@ -168,6 +172,8 @@ public class WordLadderSolver implements Assignment4Interface
     	return ladder;
     	
     }
+    
+    
 }
 
 
